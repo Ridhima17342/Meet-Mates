@@ -1,0 +1,441 @@
+/* ── Lobby ─────────────────────────────────────────────── */
+.lobby-page {
+  min-height: 100vh;
+  background: var(--surface-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.lobby-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-md);
+}
+
+.lobby-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+}
+
+.lobby-logo-mark {
+  width: 30px; height: 30px;
+  background: var(--brand);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-weight: 700; font-size: 0.95rem;
+}
+
+.lobby-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+}
+
+.lobby-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 1.75rem;
+}
+
+.lobby-preview {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #0A0E1A;
+  margin-bottom: 1.75rem;
+  aspect-ratio: 16/9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.lobby-preview video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+}
+
+.lobby-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.lobby-input {
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: var(--surface);
+}
+.lobby-input::placeholder { color: var(--text-muted); }
+.lobby-input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(15,98,254,0.1);
+}
+
+.lobby-connect-btn {
+  width: 100%;
+  padding: 0.9rem;
+  background: var(--brand);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(15,98,254,0.25);
+}
+.lobby-connect-btn:hover { background: var(--brand-dark); }
+.lobby-connect-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── Meeting room shell ─────────────────────────────────── */
+.meet-room {
+  height: 100vh;
+  background: #0C0E1A;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.meet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.5rem;
+  background: rgba(0,0,0,0.3);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.meet-header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
+}
+
+.meet-logo-mark {
+  width: 28px; height: 28px;
+  background: var(--brand);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; color: white;
+}
+
+.meet-participants-count {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.08);
+  padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+}
+
+/* ── Body: conference + optional chat ───────────────────── */
+.meet-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Conference grid ────────────────────────────────────── */
+.conference-area {
+  flex: 1;
+  display: grid;
+  /* 1 person → full width; 2+ → two equal columns */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 10px;
+  padding: 14px;
+  align-content: center;
+  overflow-y: auto;
+}
+
+/* Every tile (both self and remote) */
+.video-box {
+  position: relative;
+  width: 100%;
+  /* 16:9 aspect ratio */
+  aspect-ratio: 16 / 9;
+  background: #1a2035;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.video-box video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Avatar fills the whole tile */
+.video-box .avatar-tile {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1e2d5a, #2d3a6e);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 12px;
+}
+
+.video-box .avatar-tile .avatar-circle {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+
+.video-box .avatar-tile .avatar-name {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+}
+
+/* Name label overlay on video tiles */
+.video-box .tile-label {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(0,0,0,0.55);
+  color: white;
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 100px;
+  backdrop-filter: blur(4px);
+}
+
+/* ── Self-view: bottom-right pip ────────────────────────── */
+.self-view {
+  position: absolute;
+  bottom: 90px;          /* sits just above the controls bar */
+  right: 18px;
+  width: 180px;
+  height: 102px;         /* 16:9 */
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.18);
+  z-index: 20;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  background: #1a2035;
+}
+
+.self-view video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.self-view .avatar-tile {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1e2d5a, #2d3a6e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.self-view .avatar-tile .avatar-circle {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #4e54c8, #8f94fb);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* ── Chat panel ─────────────────────────────────────────── */
+.chat-panel {
+  width: 300px;
+  background: #12151f;
+  border-left: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.chat-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.chat-panel-header h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: white;
+}
+
+.chat-close-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  padding: 2px;
+  transition: color 0.2s;
+}
+.chat-close-btn:hover { color: white; }
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.chat-empty {
+  text-align: center;
+  color: rgba(255,255,255,0.25);
+  font-size: 0.85rem;
+  padding: 2rem 0;
+}
+
+.chat-message {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  padding: 0.6rem 0.85rem;
+}
+
+.chat-message .sender {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b9fff;
+  margin-bottom: 0.2rem;
+}
+
+.chat-message .msg-text {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.5;
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.chat-input {
+  flex: 1;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  color: white;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.chat-input::placeholder { color: rgba(255,255,255,0.25); }
+.chat-input:focus { border-color: #0F62FE; }
+
+.chat-send-btn {
+  background: #0F62FE;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  padding: 0 0.85rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.chat-send-btn:hover { background: #0043CE; }
+
+/* ── Controls bar ───────────────────────────────────────── */
+.controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0.85rem 1.5rem;
+  background: rgba(0,0,0,0.5);
+  border-top: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+  z-index: 10;
+}
+
+.ctrl-btn {
+  width: 50px; height: 50px;
+  background: rgba(255,255,255,0.1);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  color: white;
+}
+.ctrl-btn:hover { background: rgba(255,255,255,0.18); transform: scale(1.05); }
+.ctrl-btn.active { background: #0F62FE; }
+.ctrl-btn.danger { background: #EF4444; }
+.ctrl-btn.danger:hover { background: #DC2626; }
+.ctrl-btn.off { background: rgba(255,255,255,0.06); opacity: 0.55; }
+
+.ctrl-badge { position: relative; }
+
+.ctrl-badge-count {
+  position: absolute;
+  top: -4px; right: -4px;
+  background: #FF6B35;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.self-view video {
+  transform: scaleX(-1); 
+}
